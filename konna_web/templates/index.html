@@ -1,0 +1,35 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inspireeriv komentaator</title>
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css_reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script type="text/javascript">
+        async function typewriter(aText, target) {
+            let sContents = '';
+            await new Promise(r => setTimeout(r, 1000));
+            let destination = document.getElementById(target);
+            for (let i = 0; i < aText.length; i++) {
+                sContents = sContents + aText[i];
+                destination.innerHTML = sContents;
+                await new Promise(r => setTimeout(r, 50));
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            typewriter("{{ comment.content }}", "typedtext").then(r => typewriter("{{ comment.subject }}", "typedauthor"));
+        });
+    </script>
+</head>
+<body>
+<div class="bg-image"></div>
+<div id="content">
+    <div id="typedtext"></div>
+    <div id="typedauthor"></div>
+</div>
+</body>
+</html>
