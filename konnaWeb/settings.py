@@ -26,7 +26,8 @@ SECRET_KEY = 'nj26g!8#*#hc6%y52%ruiykvt0)!_xxt++%p+*nkcxgvkpi*2j'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'delfi-comment-inspirational.herokuapp.com'
+    'delfi-comment-inspirational.herokuapp.com',
+    '127.0.0.1'
 ]
 
 
