@@ -1,46 +1,48 @@
+import sys
 import requests
 from bs4 import BeautifulSoup
+from typing import List
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+
+
+class Article(TypedDict):
+    id: int
+    url: str
+    name: str
+    comments: int
+
 
 ARTICLES_URL = "https://www.delfi.ee/"
 
 
-def get_article_comment_counts_ids():
+def get_front_page_articles() -> List[Article]:
     page = requests.get(ARTICLES_URL)
-    soup = BeautifulSoup(page.text, "html.parser")
-    articles_with_comments = soup.findAll("a", {"class": "headline__comments"})
-    ids = []
-    for article in articles_with_comments:
-        comments = int(article.text.replace("(", "").replace(")", ""))
-        link = article["href"]
-        if len(link.split("?id=")) > 1:
-            ids.append({
-                "id": int(link.split("?id=")[1].replace("&com=1", "")),
-                "count": comments,
-                "link": link,
-            })
+    parser = BeautifulSoup(page.text, "html.parser")
+    links_with_comments = parser.select(".headline a.headline__comments")
+    articles: List[Article] = []
+    for link in links_with_comments:
+        title = link.find_previous_sibling("h1")
+        if title and len(link["href"].split("?id=")) > 1:
+            article = Article(
+                id=int(link["href"].split("?id=")[1].replace("&com=1", "")),
+                name=title.text,
+                url=link["href"],
+                comments=int(link.text.replace("(", "").replace(")", "")),
+            )
+            articles.append(article)
 
-    return ids
-
-
-def get_top_n_article_ids(n=5):
-    comment_counts_ids = get_article_comment_counts_ids()
-    comment_counts_ids.sort(key=lambda x: x["count"], reverse=True)
-    return [x["id"] for x in comment_counts_ids[:n]]
+    return articles
 
 
-def get_top_n_article_ids_link(n=5):
-    comment_counts_ids = get_article_comment_counts_ids()
-    comment_counts_ids.sort(key=lambda x: x["count"], reverse=True)
-    return [(x["id"], x["link"]) for x in comment_counts_ids[:n]]
-
-
-def get_article_name(article_url):
-    page = requests.get(article_url)
-    soup = BeautifulSoup(page.text, "html.parser")
-    article_name = soup.find("h1", {"class": "article-title"})
-    return article_name.text
+def get_top_front_page_articles(limit=5) -> List[Article]:
+    articles = get_front_page_articles()
+    articles.sort(key=lambda x: x["comments"], reverse=True)
+    return articles[:limit]
 
 
 if __name__ == '__main__':
-    get_article_name(
-        "https://sport.delfi.ee/news/ekstreemsport/kellysildaru/sildarude-tuli-kelly-ja-tonis-jagasid-asju-kohtus-edasi-kaib-vaidlus-suusaliidust-saadava-raha-ule?id=89830575&com=1")
+    print(get_top_front_page_articles())

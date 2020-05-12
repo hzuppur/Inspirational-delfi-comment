@@ -1,6 +1,23 @@
 from pprint import pprint
 import requests
 import unicodedata
+import sys
+from typing import List, Union
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+
+
+class Comment(TypedDict):
+    subject: str
+    content: str
+
+
+class CommentWithReplies(Comment):
+    replies: List[Comment]
+
 
 API_URL = "https://api.delfi.ee/comment/v1/graphql"
 QUERY_PARENTS_REPLIES = """fragment CommentBody on Comment {
@@ -33,7 +50,7 @@ QUERY_PARENTS_ONLY = """query cfe_getComments($articleId: Int!, $modeType: ModeT
 """
 
 
-def get_comments_with_replies(article_id, anon=True, offset=0):
+def get_comments_with_replies(article_id: int, anon=True, offset=0) -> List[CommentWithReplies]:
     return requests.post(
         API_URL,
         json={
@@ -52,7 +69,7 @@ def get_comments_with_replies(article_id, anon=True, offset=0):
     ).json()["data"]["getCommentsByArticleId"]["comments"]
 
 
-def get_comments(article_id, anon=True, offset=0):
+def get_comments(article_id: int, anon=True, offset=0) -> List[Comment]:
     return requests.post(
         API_URL,
         json={
@@ -69,14 +86,18 @@ def get_comments(article_id, anon=True, offset=0):
     ).json()["data"]["getCommentsByArticleId"]["comments"]
 
 
-def get_all_comments(article_id, with_replies=False, anon_reg=[True, False]):
+def get_all_comments(article_id: int, with_replies=False,
+                     anon_reg=None) -> Union[List[Comment], List[CommentWithReplies]]:
+    if anon_reg is None:
+        anon_reg = [True, False]
     result = []
     for is_anon in anon_reg:
         has_more = True
         offset = 0
         while has_more:
-            comments = get_comments_with_replies(article_id, is_anon, offset) if with_replies else get_comments(
-                article_id, is_anon, offset)
+            comments = get_comments_with_replies(article_id, is_anon, offset) \
+                if with_replies \
+                else get_comments(article_id, is_anon, offset)
             result += comments
             has_more = len(comments) > 99
             offset += 100
@@ -84,16 +105,16 @@ def get_all_comments(article_id, with_replies=False, anon_reg=[True, False]):
     return result
 
 
-def normalize_text(text):
+def normalize_text(text: str) -> str:
     if text:
         return unicodedata.normalize("NFKD", text)
 
 
-def comment_to_string(comment):
+def comment_to_string(comment: Comment) -> str:
     return "{}: {}".format(normalize_text(comment["subject"]), normalize_text(comment["content"]))
 
 
-def flatten_comments(comments):
+def flatten_comments(comments) -> Union[List[Comment], List[CommentWithReplies]]:
     content = []
 
     def append(comment):

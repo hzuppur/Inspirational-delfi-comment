@@ -22,7 +22,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      typewriter("{{ comment.content }}", "typedtext").then(() => typewriter("{{ comment.subject }}", "typedauthor"));
+      typewriter(`{{ content }}`, "typedtext").then(() => typewriter(`{{ author }}`, "typedauthor"));
     });
   </script>
 </head>

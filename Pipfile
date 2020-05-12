@@ -12,6 +12,7 @@ requests = "*"
 beautifulsoup4 = "*"
 whitenoise = "*"
 Django = "*"
+typing-extensions = "*"
 
 [requires]
 python_version = "3.7"
