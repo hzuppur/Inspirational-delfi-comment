@@ -1,1 +1,1 @@
-web: gunicorn konna_web.wsgi --log-file -
+web: gunicorn konnaWeb.wsgi --log-file -
