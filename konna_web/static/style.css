@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+{% load static %}
 
 body {
     background-size: cover;
@@ -6,7 +7,7 @@ body {
 }
 
 .bg-image {
-    background: url('../static/img/img1.jpg') no-repeat center;
+    background: url('img/img1.jpg') no-repeat center;
     filter: blur(8px);
     -webkit-filter: blur(8px);
     height: 100%;
