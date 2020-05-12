@@ -33,6 +33,7 @@ def get_top_n_article_ids_link(n=5):
   comment_counts_ids.sort(key=lambda x: x["count"], reverse=True)
   return [(x["id"], x["link"]) for x in comment_counts_ids[:n]]
 
+
 def get_article_name(article_url):
   page = requests.get(article_url)
   soup = BeautifulSoup(page.text, "html.parser")
