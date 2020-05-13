@@ -75,6 +75,43 @@ body {
 }
 
 a {
-    color: inherit; /* blue colors for links too */
-    text-decoration: inherit; /* no underline */
+    color: inherit;
+    text-decoration: inherit;
+}
+
+@media only screen and (max-device-width: 768px) {
+    #content {
+        position: absolute;
+        top: 0;
+        margin-top: 50px;
+        height: 100%;
+        width: 80%;
+    }
+
+    #typedtext {
+        color: #ffffff;
+        font-size: 30px;
+    }
+
+    #typedauthor {
+        color: #bcbcbc;
+        font-size: 20px;
+    }
+
+    #article {
+        color: #fefefe;
+        font-style: italic;
+        font-size: 15px;
+        text-shadow: 0 0 20px #1b1b1b;
+        margin-bottom: 30px;
+    }
+
+    #comment_and_author {
+        top: 50%;
+        height: 60%;
+        display: flex;
+        align-items: center; /* Vertical center alignment */
+        justify-content: center; /* Horizontal center alignment */
+        flex-direction: column;
+    }
 }
