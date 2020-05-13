@@ -22,7 +22,7 @@ def random_comment() -> (dc.Comment, str):
     all_comments = dc.get_all_comments(article["id"], False, [True])
     filtered_comments = [comment for comment in all_comments if
                          comment["content"] is not None and 2 < len(comment["content"]) < 200]
-    return random.choice(filtered_comments), article["name"]
+    return random.choice(filtered_comments), article["name"], article["url"]
 
 
 if __name__ == '__main__':
