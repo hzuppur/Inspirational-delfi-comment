@@ -21,7 +21,6 @@ ARTICLES_URL = "https://www.delfi.ee/"
 
 def get_front_page_articles() -> List[Article]:
     page = requests.get(ARTICLES_URL)
-    print(page)
     parser = BeautifulSoup(page.text, "html.parser")
     links_with_comments = parser.select(".headline a.headline__comments")
     articles: List[Article] = []
