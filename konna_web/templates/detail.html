@@ -12,7 +12,7 @@
             <li>{{ comment.subject }} - {{ comment.content }}</li>
             {% for reply in comment.commentreply_set.all %}
                 <ul>
-                    <li>{{ comment.subject }} - {{ comment.content }}</li>
+                    <li>{{ reply.subject }} - {{ reply.content }}</li>
                 </ul>
             {% endfor %}
         {% endfor %}

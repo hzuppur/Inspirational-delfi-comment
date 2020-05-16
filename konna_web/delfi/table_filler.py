@@ -20,6 +20,5 @@ def add_articles_to_table():
 
       # If comment has reply´s, add them to the reply table
       if d_comment["replies"] is not None:
-        # If the reply already exists, then it throws IntegrityError
         for d_reply in d_comment["replies"]:
           reply, created = CommentReply.objects.get_or_create(comment=comment, content=d_reply["content"], subject=d_reply["subject"])
