@@ -13,7 +13,7 @@ class Article(models.Model):
 
 class Comment(models.Model):
   article = models.ForeignKey(Article, on_delete=models.CASCADE)
-  content = models.CharField(max_length=2000)
+  content = models.CharField(max_length=4000)
   subject = models.CharField(max_length=500)
 
   def __str__(self):
@@ -22,7 +22,7 @@ class Comment(models.Model):
 
 class CommentReply(models.Model):
   comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-  content = models.CharField(max_length=2000)
+  content = models.CharField(max_length=4000)
   subject = models.CharField(max_length=500)
 
   def __str__(self):
