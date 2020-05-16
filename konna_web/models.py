@@ -8,7 +8,7 @@ class Article(models.Model):
   comments = models.IntegerField()
 
   def __str__(self):
-    return self.name, self.url
+    return self.name
 
 
 class Comment(models.Model):
@@ -17,7 +17,7 @@ class Comment(models.Model):
   subject = models.CharField(max_length=100)
 
   def __str__(self):
-    return self.content, self.subject
+    return self.content
 
 
 class CommentReply(models.Model):
@@ -26,4 +26,4 @@ class CommentReply(models.Model):
   subject = models.CharField(max_length=100)
 
   def __str__(self):
-    return self.content, self.subject
+    return self.content
