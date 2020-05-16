@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -19,10 +18,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+#SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = "nj26g!8#*#hc6%y52%ruiykvt0)!_xxt++%p+*nkcxgvkpi*2j"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+#DEBUG = os.environ['DEBUG']
+DEBUG = True
 
 ALLOWED_HOSTS = [
   'delfi-comment-inspirational.herokuapp.com',
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+  'konna_web.apps.KonnaWebConfig',
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',

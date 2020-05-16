@@ -133,6 +133,6 @@ def flatten_comments(comments) -> Union[List[Comment], List[CommentWithReplies]]
 
 
 if __name__ == "__main__":
-    res = flatten_comments(get_all_comments(89615287, True))
+    res = get_comments_with_replies(89615287)
     pprint(res)
     print(len(res))
