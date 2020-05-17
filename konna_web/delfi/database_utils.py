@@ -7,6 +7,8 @@ from django.utils import timezone
 def add_articles_to_table():
   # Get all delfi front page articles and iterate over them
   articles = da.get_front_page_articles()
+  # Filter out articles that dont have comments
+  articles = [article for article in articles if article["comments"] > 0]
   for d_article in articles:
     # Create new article and save it to the db
     article = Article(id=d_article["id"], name=d_article["name"], url=d_article["url"], comments=d_article["comments"], pub_date=timezone.now())

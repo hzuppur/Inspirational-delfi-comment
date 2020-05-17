@@ -8,7 +8,7 @@
 {% if articles %}
     <ul>
         {% for article in articles %}
-            <li><a href="{% url 'detail' article.id %}">{{ article.name }}</a></li>
+            <li><a href="{% url 'detail' article.id %}">{{ article.name }} - {{ article.comments }}</a></li>
         {% endfor %}
     </ul>
 {% endif %}
