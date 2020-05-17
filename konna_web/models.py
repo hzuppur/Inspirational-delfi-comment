@@ -1,4 +1,6 @@
+import datetime
 from django.db import models
+from django.utils import timezone
 
 
 class Article(models.Model):
@@ -6,9 +8,13 @@ class Article(models.Model):
   name = models.CharField(max_length=500)
   url = models.CharField(max_length=500)
   comments = models.IntegerField()
+  pub_date = models.DateTimeField('date published')
 
   def __str__(self):
     return self.name
+
+  def was_published_recently(self):
+    return self.pub_date >= timezone.now() - datetime.timedelta(days=3)
 
 
 class Comment(models.Model):

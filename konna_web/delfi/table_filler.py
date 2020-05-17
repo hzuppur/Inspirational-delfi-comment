@@ -1,7 +1,7 @@
 from konna_web.models import Article, Comment, CommentReply
 import konna_web.delfi.delfi_articles as da
 import konna_web.delfi.delfi_comments as dc
-from django.db import IntegrityError
+from django.utils import timezone
 
 
 def add_articles_to_table():
@@ -9,7 +9,7 @@ def add_articles_to_table():
   articles = da.get_front_page_articles()
   for d_article in articles:
     # Create new article and save it to the db
-    article = Article(id=d_article["id"], name=d_article["name"], url=d_article["url"], comments=d_article["comments"])
+    article = Article(id=d_article["id"], name=d_article["name"], url=d_article["url"], comments=d_article["comments"], pub_date=timezone.now())
     article.save()
     # Get all comments for that article and iterate over them
     comments = dc.get_comments_with_replies(d_article["id"])
