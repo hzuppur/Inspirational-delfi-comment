@@ -22,3 +22,10 @@ def add_articles_to_table():
       if d_comment["replies"] is not None:
         for d_reply in d_comment["replies"]:
           reply, created = CommentReply.objects.get_or_create(comment=comment, content=d_reply["content"], subject=d_reply["subject"])
+
+
+def remove_old_articles():
+  articles = Article.objects.all()
+  for article in articles:
+    if not article.was_published_recently():
+      article.delete()
