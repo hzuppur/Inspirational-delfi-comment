@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 import konna_web.delfi.database_utils as db_util
 
+
 class Command(BaseCommand):
-  #python manage.py add_articles_to_table
+  # python manage.py add_articles_to_table
   help = 'Adds all delfi front page articles to the database'
 
   def handle(self, *args, **options):

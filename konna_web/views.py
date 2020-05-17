@@ -1,15 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-import konna_web.delfi.delfi_random_anon_comment as drac
 from konna_web.models import Article, Comment
+import konna_web.delfi.database_utils as db_util
 
 
 def index(request):
-    random_comment, article_name, article_link = drac.random_comment()
+    random_comment, article = db_util.get_random_comment()
     context = {
-        "content": random_comment["content"].strip(),
-        "author": random_comment["subject"].strip(),
-        "article_name": article_name,
-        "article_link": article_link,
+        "content": random_comment.content.strip(),
+        "author": random_comment.subject.strip(),
+        "article_name": article.name,
+        "article_link": article.url,
     }
     return render(request, "index.html", context)
 
