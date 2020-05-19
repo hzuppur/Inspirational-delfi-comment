@@ -14,7 +14,7 @@ class Article(models.Model):
     return self.name
 
   def was_published_recently(self):
-    return self.pub_date >= timezone.now() - datetime.timedelta(days=3)
+    return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 
 class Comment(models.Model):
