@@ -5,7 +5,7 @@ from django.utils import timezone
 import random
 
 
-def add_articles_to_table():
+def add_articles_to_table(with_replys = True):
   # Get all delfi front page articles and iterate over them
   articles = da.get_front_page_articles()
   for d_article in articles:
@@ -21,7 +21,7 @@ def add_articles_to_table():
         comment, created = Comment.objects.get_or_create(article=article, content=d_comment["content"], subject=d_comment["subject"])
 
       # If comment has reply´s, add them to the reply table
-      if d_comment["replies"] is not None:
+      if with_replys and  d_comment["replies"] is not None:
         for d_reply in d_comment["replies"]:
           reply, created = CommentReply.objects.get_or_create(comment=comment, content=d_reply["content"], subject=d_reply["subject"])
 
