@@ -8,5 +8,5 @@ class Command(BaseCommand):
 
   def handle(self, *args, **options):
     db_util.remove_old_articles()
-    db_util.add_articles_to_table()
+    db_util.add_articles_to_table(False)
     self.stdout.write(self.style.SUCCESS('Successfully added comments to table'))
